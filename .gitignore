@@ -1,0 +1,6 @@
+Data/
+test.py
+.ipynb_checkpoints/
+train_s.py
+prev_train.py
+data_store.py
