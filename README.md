@@ -1,44 +1,54 @@
 # Polyp_Segmentation_-in-colonoscopy-images
 
 
-U-Net is a convolutional neural network architecture designed specifically for biomedical image segmentation. It was introduced in 2015 by Olaf Ronneberger, Philipp Fischer, and Thomas Brox in their paper "U-Net: Convolutional Networks for Biomedical Image Segmentation."
-Key Features
-The U-Net architecture has several distinctive characteristics:
+# Polyp Segmentation in Colonoscopy Images
 
-U-shaped design: The network consists of a contracting path (encoder) and an expansive path (decoder), forming a U-shape.
-Contracting path: A typical CNN that captures context through a series of convolutions and max pooling operations, reducing spatial dimensions while increasing feature channels.
-Expansive path: Performs upsampling of feature maps and combines them with high-resolution features from the contracting path via skip connections.
-Skip connections: Direct connections between corresponding layers in the contracting and expansive paths, allowing the network to preserve spatial information lost during downsampling.
-Symmetric architecture: The expansive path is roughly symmetric to the contracting path, yielding a u-shaped architecture.
+![Polyp Segmentation Example](https://via.placeholder.com/800x250)
 
+## Project Overview
 
+This repository contains an implementation of polyp segmentation in colonoscopy images using deep learning techniques. The project aims to improve colorectal cancer screening by automatically identifying and segmenting polyps from colonoscopy images.
 
-U-Net's skip connection design effectively combines spatial information from the contracting path with contextual information from the expansive path, addressing the fundamental trade-off between localization accuracy and the use of context that existed in previous fully convolutional networks.
+## U-Net Architecture
 
+This project implements the U-Net architecture, a specialized convolutional neural network designed for biomedical image segmentation.
 
+### Key Features
 
-## Dice Coefficient (DICE)
+- **U-shaped design**: The network consists of a contracting path (encoder) and an expansive path (decoder), forming a distinctive U-shape
+- **Contracting path**: Captures context through a series of convolutions and max pooling operations
+- **Expansive path**: Performs upsampling of feature maps and combines them with high-resolution features
+- **Skip connections**: Direct connections between corresponding layers that preserve spatial information
+- **Symmetric architecture**: The expansive path mirrors the contracting path
 
-Definition: Measures overlap between two segmentation masks
-Formula: DICE = 2|A∩B|/(|A|+|B|) = 2TP/(2TP+FP+FN)
-Range: [0,1] where 1 indicates perfect overlap
-Use case: Commonly used in medical image segmentation; more sensitive to true positives
+U-Net's design effectively addresses the fundamental trade-off between localization accuracy and contextual understanding that existed in previous fully convolutional networks.
 
-## Intersection over Union (IoU)
+## Dataset
 
-Definition: Measures overlap divided by union of two segmentation masks
-Formula: IoU = |A∩B|/|A∪B| = TP/(TP+FP+FN)
-Range: [0,1] where 1 indicates perfect overlap
-Use case: Standard in computer vision benchmarks; more strictly penalizes errors
+This project utilizes the **Kvasir-SEG dataset**, a comprehensive collection of gastrointestinal polyp images with corresponding segmentation masks.
 
+### Dataset Specifications
 
+- **Content**: 1,000 polyp images with corresponding ground truth segmentation masks
+- **Source**: Collected during real colonoscopy examinations
+- **Format**:
+  - Images: High-resolution RGB images in JPG format
+  - Segmentation Masks: Binary masks in PNG format
+- **Resolution**: Variable, predominantly 720×576 pixels
+- **Annotations**: Pixel-level annotations by medical experts, verified by experienced endoscopists
 
+## Evaluation Metrics
 
-## Data set - Segmented Polyp Dataset for Computer Aided Gastrointestinal Disease Detection.
-The Kvasir-SEG dataset consists of 1,000 polyp images with corresponding ground truth segmentation masks, collected during real colonoscopy examinations. This dataset serves as a valuable resource for developing and evaluating medical image segmentation algorithms focused on colorectal cancer screening.
-Dataset Specifications
+### Dice Coefficient (DICE)
+- **Definition**: Measures overlap between two segmentation masks
+- **Formula**: DICE = 2|A∩B|/(|A|+|B|) = 2TP/(2TP+FP+FN)
+- **Range**: [0,1] where 1 indicates perfect overlap
+- **Use case**: Commonly used in medical image segmentation; more sensitive to true positives
 
-Images: High-resolution RGB images in JPG format
-Segmentation Masks: Binary masks in PNG format
-Resolution: Variable, predominantly 720×576 pixels
-Annotations: Pixel-level annotations by medical experts, verified by experienced endoscopists
+### Intersection over Union (IoU)
+- **Definition**: Measures overlap divided by union of two segmentation masks
+- **Formula**: IoU = |A∩B|/|A∪B| = TP/(TP+FP+FN)
+- **Range**: [0,1] where 1 indicates perfect overlap
+- **Use case**: Standard in computer vision benchmarks; more strictly penalizes errors
+
+  Project is not yet completed. Further documentation will be provided upon completion of the project.
