@@ -1,29 +1,35 @@
 from dataloader import *
 
 
+import torch
+import torch.nn as nn
+
 class DICE_BCE_Loss(nn.Module):
     def __init__(self, smooth=1):
         super().__init__()
         self.smooth = smooth
+        self.bce = nn.BCEWithLogitsLoss()  # Handles raw logits properly
 
     def forward(self, logits, targets):
-        intersection = 2*(logits * targets).sum() + self.smooth
-        union = (logits + targets).sum() + self.smooth
-        dice_loss = 1. - intersection / union
+        logits = torch.sigmoid(logits)  # Convert logits to probabilities
 
-        loss = nn.BCELoss() 
-        bce_loss = loss(logits, targets)
+        intersection = 2 * (logits * targets).sum() + self.smooth
+        union = logits.sum() + targets.sum() + self.smooth
+        dice_loss = 1. - (intersection / union)
+
+        bce_loss = self.bce(logits, targets)
 
         return dice_loss + bce_loss
-    
-def DiceLoss(logits, targets):
-    intersection = 2*(logits * targets).sum()
-    union = (logits + targets).sum()
-    if union == 0:
-        return 1
-    dice_coeff = intersection / union
-    return dice_coeff.item()
 
+def DiceCoefficient(logits, targets, smooth=1):
+    logits = torch.sigmoid(logits)  # Ensure values are between 0 and 1
+
+    intersection = 2 * (logits * targets).sum() + smooth
+    union = logits.sum() + targets.sum() + smooth
+
+    dice_coeff = intersection / union
+
+    return dice_coeff.item()
 
 
 def compute_iou(outputs, targets, threshold=0.5, smooth=1e-6):

@@ -24,7 +24,7 @@ if __name__ == '__main__':
     )
 
     transform = transforms.Compose([
-        transforms.Resize((224, 224)),
+        transforms.Resize((256, 256)),  
         transforms.ToTensor(),
         transforms.RandomHorizontalFlip(p=0.5),
         transforms.RandomVerticalFlip(p=0.5),
@@ -34,26 +34,35 @@ if __name__ == '__main__':
     ])
 
     mask_transforms = transforms.Compose([
-        transforms.Resize((224, 224)),
+        transforms.Resize((256, 256)),  # Match the image size
         transforms.ToTensor()
     ])
 
 
+    test_transform = transforms.Compose([
+        transforms.Resize((256, 256)),  
+        transforms.ToTensor(),
+        transforms.Normalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225))])
+    
+
 
     train_dataset = polypSegmentationDataset(root,train_images,train_masks,transform=transform,mask_transform=mask_transforms)
-    test_dataset = polypSegmentationDataset(root,test_images,test_masks,transform=transform,mask_transform=mask_transforms)
-    val_dataset = polypSegmentationDataset(root,val_images,val_masks,transform=transform,mask_transform=mask_transforms)
-    train_loader = DataLoader(train_dataset, batch_size=4, shuffle=True)
-    test_loader = DataLoader(test_dataset, batch_size=4, shuffle=False)
-    val_loader = DataLoader(val_dataset, batch_size=4, shuffle=False)
+    test_dataset = polypSegmentationDataset(root,test_images,test_masks,transform=test_transform,mask_transform=mask_transforms)
+    val_dataset = polypSegmentationDataset(root,val_images,val_masks,transform=test_transform,mask_transform=mask_transforms)
+    batch_size = 2
+    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
+    test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
+    val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False)
     
     
    
-    model = AttentionUnet().to(device)
+    model = UNet(3,1).to(device)
     loss_fn = DICE_BCE_Loss() 
+    #criterion = nn.BCEWithLogitsLoss()
+
     optimizer = optim.AdamW(model.parameters(), lr=1e-4, weight_decay=1e-5)
-    scheduler = OneCycleLR(optimizer, max_lr=1e-3, steps_per_epoch=len(train_loader), epochs=15, anneal_strategy='cos', cycle_momentum=False)
-    metrics = train(model, train_loader, test_loader, optimizer, loss_fn, device, epochs=15, scheduler=scheduler)
+    scheduler = OneCycleLR(optimizer, max_lr=1e-3, steps_per_epoch=len(train_loader), epochs=30, anneal_strategy='cos', cycle_momentum=False)
+    metrics = train(model, train_loader, test_loader, optimizer, loss_fn, device, epochs=30,scheduler=scheduler)
 
     train_losses    = metrics['train_losses']
     val_losses      = metrics['val_losses']

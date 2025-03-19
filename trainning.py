@@ -3,8 +3,6 @@ from model import *
 from loss_func import *
 
 
-
-
 def train(model, train_loader, test_loader, optimizer, loss_fn, device, epochs=15, scheduler=None):
     train_losses, val_losses = [], []
     train_dices, val_dices = [], []
@@ -35,7 +33,7 @@ def train(model, train_loader, test_loader, optimizer, loss_fn, device, epochs=1
                 scheduler.step()
             
             train_loss += loss_value.item()
-            train_dice += DiceLoss(outputs, masks)
+            train_dice += DiceCoefficient(outputs, masks)
             train_iou += compute_iou(outputs, masks)
             acc, prec = calculate_metrics(outputs, masks)
             train_accuracy += acc
@@ -67,7 +65,7 @@ def train(model, train_loader, test_loader, optimizer, loss_fn, device, epochs=1
                 outputs = model(images)
                 loss_value = loss_fn(outputs, masks)
                 val_loss += loss_value.item()
-                val_dice += DiceLoss(outputs, masks)
+                val_dice += DiceCoefficient(outputs, masks)
                 val_iou += compute_iou(outputs, masks)
                 acc, prec = calculate_metrics(outputs, masks)
                 val_accuracy += acc
