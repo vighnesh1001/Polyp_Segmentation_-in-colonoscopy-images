@@ -1,9 +1,9 @@
-# Polyp_Segmentation_-in-colonoscopy-images
+
 
 
 # Polyp Segmentation in Colonoscopy Images
 
-![Polyp Segmentation Example](https://via.placeholder.com/800x250)
+
 
 ## Project Overview
 
