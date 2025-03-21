@@ -41,7 +41,8 @@ U-Net++ can be adapted to various segmentation tasks, including medical imaging,
 ## Dataset
 
 This project utilizes the **Kvasir-SEG dataset**, a comprehensive collection of gastrointestinal polyp images with corresponding segmentation masks.
-
+<br>
+[link for data](https://datasets.simula.no/kvasir-seg/)
 ### Dataset Specifications
 
 - **Content**: 1,000 polyp images with corresponding ground truth segmentation masks
@@ -68,7 +69,67 @@ This project utilizes the **Kvasir-SEG dataset**, a comprehensive collection of 
 
 
 
+## VISUALIZATION OF IMAGE AND MASK
+![My diagram](images/imgcompini.png )
 
+
+
+
+
+
+# Final Results 
+
+
+
+# Final Results
+
+| Metric     | Train   | Validation |
+|------------|---------|-----------|
+| **Loss**       | 0.8054  | 0.8133    |
+| **DICE**       | 0.8503  | 0.8425    |
+| **IoU**        | 0.7625  | 0.7422    |
+| **Accuracy**   | 0.9514  | 0.9463    |
+| **Precision**  | 0.8773  | 0.8741    |
+
+
+
+
+## comparison of unet and unet++
+
+# Comparison of Two Runs
+
+| Metric     | Unet++ (Train) | Unet (Val) | Unet++ (Train) | Unet (Val) |
+|------------|---------------|-------------|---------------|-------------|
+| **Loss**       | 0.8054        | 0.8133      | 0.8118        | 0.8794      |
+| **DICE**       | 0.8503        | 0.8425      | 0.8455        | 0.7858      |
+| **IoU**        | 0.7625        | 0.7422      | 0.7552        | 0.6770      |
+| **Accuracy**   | 0.9514        | 0.9463      | 0.9497        | 0.9314      |
+| **Precision**  | 0.8773        | 0.8741      | 0.8574        | 0.8059      |
+
+
+
+
+![my_plot](images/GRPH1.png)
+<br>
+---
+
+![my_plot](images/iouplot.png)
+<br>
+---
+
+![my_plot](images/lossplot.png)
+<br>
+---
+
+---
+>The graph shows how the training loss and validation loss change over time as the model learns. In the first few epochs, both losses start high but decrease, meaning the model is improving. The training loss (blue) steadily decreases, while the validation loss (orange) fluctuates a bit but follows a similar trend.
+>By the end of the training (epoch 30), both losses are close to 0.8, showing that the model has learned well and is not overfitting. The small gap between them indicates good generalization, meaning the model performs well on both training and unseen validation data.
+
+----
+
+
+ Hugging Face space for this model .
+[hugging_face](https://huggingface.co/spaces/vighneshtensor/Polyp_Segmentation_-in-colonoscopy-images)
 
 ### setup 
 ## Prerequisites
