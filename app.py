@@ -7,7 +7,7 @@ import torch
 from PIL import Image
 
 def preprocess_image(image):
-    """Preprocess image for model inference - matches training preprocessing"""
+  
     if len(image.shape) == 2:
         image = cv2.cvtColor(image, cv2.COLOR_GRAY2RGB)
     elif image.shape[2] == 4:
@@ -25,7 +25,7 @@ def preprocess_image(image):
     return image
 
 def onnx_inference(image, onnx_path="model/unetpp.onnx"):
-    """Run inference using ONNX model"""
+   
     image = np.array(image)
     
     original_h, original_w = image.shape[:2]
@@ -60,14 +60,13 @@ def onnx_inference(image, onnx_path="model/unetpp.onnx"):
         return blank_mask, image
 
 def predict(image, model_path="model/unetpp.onnx"):
-    """Prediction function for Gradio interface"""
+   
     if image is None:
         return None, None
     mask, overlay = onnx_inference(image, model_path)
     return mask, overlay
 
 def create_interface(model_path="model/unetpp.onnx"):
-    """Create Gradio interface"""
     
     if not os.path.exists(model_path):
         print(f"Warning: Model file not found at {model_path}")
