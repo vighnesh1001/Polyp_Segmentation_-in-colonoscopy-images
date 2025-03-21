@@ -9,6 +9,8 @@
 
 This repository contains an implementation of polyp segmentation in colonoscopy images using deep learning techniques. The project aims to improve colorectal cancer screening by automatically identifying and segmenting polyps from colonoscopy images.
 
+[UNet++: A Nested U-Net Architecture for Medical Image Segmentation](https://arxiv.org/abs/1807.10165)
+
 ## U-Net++  Architecture
 
 This project implements the U-Net++ architecture, a specialized convolutional neural network designed for biomedical image segmentation.
