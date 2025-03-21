@@ -128,6 +128,11 @@ This project utilizes the **Kvasir-SEG dataset**, a comprehensive collection of 
 ----
 
 
+## final visualisation 
+
+![final_visualization](images/finalviz.png)
+
+
  Hugging Face space for this model .
 [hugging_face](https://huggingface.co/spaces/vighneshtensor/Polyp_Segmentation_-in-colonoscopy-images)
 
