@@ -5,16 +5,16 @@ import sys
 import segmentation_models_pytorch as smp
 
 def export_to_onnx(model_path="model/unet_model.pth", save_path="model/unet.onnx"):
-    """Export PyTorch model to ONNX format"""
+   
     os.makedirs(os.path.dirname(save_path), exist_ok=True)
     
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     
     try:
-        # Initialize the same model architecture used during training
+       
         model = smp.UnetPlusPlus(
             encoder_name='resnet34',
-            encoder_weights=None,  # Set to None since we're loading weights
+            encoder_weights=None,  
             in_channels=3,
             classes=1,
         ).to(device)
@@ -53,17 +53,16 @@ def export_to_onnx(model_path="model/unet_model.pth", save_path="model/unet.onnx
         sys.exit(1)
 
 if __name__ == "__main__":
-    # Get the absolute path to the project root directory
-    # This assumes export_onnx.py is in the onnx_main directory
+  
     script_dir = os.path.dirname(os.path.abspath(__file__))
     project_root = os.path.dirname(script_dir)
     
-    # Check for model in both possible locations
+   
     possible_paths = [
-        os.path.join(project_root, "model", "unetpp_model.pth"),  # /path/to/project/model/unetpp_model.pth
-        os.path.join(project_root, "models", "unetpp_model.pth"),  # /path/to/project/models/unetpp_model.pth
-        "../model/unetpp_model.pth",  # Original path
-        "model/unetpp_model.pth",     # Another possible path
+        os.path.join(project_root, "model", "unetpp_model.pth"), 
+        os.path.join(project_root, "models", "unetpp_model.pth"),  
+        "../model/unetpp_model.pth",  
+        "model/unetpp_model.pth",     
     ]
     
     model_path = None
@@ -79,7 +78,7 @@ if __name__ == "__main__":
         print("\nPlease specify the correct path to your model file.")
         sys.exit(1)
     
-    # Create output directory if it doesn't exist
+    
     output_dir = os.path.join(project_root, "model")
     os.makedirs(output_dir, exist_ok=True)
     

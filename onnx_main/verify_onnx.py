@@ -9,7 +9,7 @@ import sys
 from torchvision import transforms
 
 def load_pytorch_model(model_path="model/attention_unet_model.pth"):
-    """Load the trained PyTorch model"""
+    
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     try:
         model = UNet().to(device)
@@ -21,7 +21,7 @@ def load_pytorch_model(model_path="model/attention_unet_model.pth"):
         sys.exit(1)
 
 def preprocess_for_pytorch(image_path, device):
-    """Preprocess an image for PyTorch model inference"""
+   
     if isinstance(image_path, str):
         image = cv2.imread(image_path)
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -43,7 +43,7 @@ def preprocess_for_pytorch(image_path, device):
     return image_tensor, (original_h, original_w), image
 
 def preprocess_for_onnx(image_path):
-    """Preprocess an image for ONNX model inference"""
+   
     if isinstance(image_path, str):
         image = cv2.imread(image_path)
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -65,7 +65,7 @@ def preprocess_for_onnx(image_path):
     return image_batch, (original_h, original_w), image
 
 def pytorch_inference(model, image_tensor, original_dims, device):
-    """Run inference with PyTorch model"""
+   
     with torch.no_grad():
         output = model(image_tensor)
         output = torch.sigmoid(output)
@@ -77,7 +77,7 @@ def pytorch_inference(model, image_tensor, original_dims, device):
     return mask
 
 def onnx_inference(onnx_path, image_tensor, original_dims):
-    """Run inference with ONNX model"""
+    
     try:
         session = onnxruntime.InferenceSession(onnx_path)
         
@@ -96,7 +96,7 @@ def onnx_inference(onnx_path, image_tensor, original_dims):
         sys.exit(1)
 
 def compare_outputs(pytorch_output, onnx_output, image, image_path=None):
-    """Compare and visualize the outputs from both models"""
+   
     pixel_match = np.mean(pytorch_output == onnx_output) * 100
     mse = np.mean((pytorch_output.astype(float) - onnx_output.astype(float)) ** 2)
     
@@ -156,7 +156,7 @@ def compare_outputs(pytorch_output, onnx_output, image, image_path=None):
     plt.show()
 
 def verify_models(image_path, pytorch_model_path="model/unet_model.pth", onnx_model_path="model/unet.onnx"):
-    """Verify that PyTorch and ONNX models produce the same output"""
+    
     if not os.path.exists(pytorch_model_path):
         print(f"Error: PyTorch model file not found at {pytorch_model_path}")
         sys.exit(1)

@@ -64,14 +64,14 @@ test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model = smp.Unet(
-    encoder_name='resnet34',        # Choose encoder, e.g., resnet34, efficientnet-b0, etc.
-    encoder_weights='imagenet',     # Use pre-trained weights; set to None if not required
-    in_channels=3,                  # Number of input channels (e.g., 3 for RGB images)
-    classes=1,                      # Number of output channels (e.g., 1 for binary segmentation)
+    encoder_name='resnet34',       
+    encoder_weights='imagenet',     
+    in_channels=3,                  
+    classes=1,                      
 ).to(device)
 
 
-loss_fn = DICE_BCE_Loss()  # Custom loss function combining Dice and BCE losses
+loss_fn = DICE_BCE_Loss()  
 optimizer = optim.AdamW(model.parameters(), lr=1e-4, weight_decay=1e-5)
 scheduler = OneCycleLR(optimizer, max_lr=1e-3, steps_per_epoch=len(train_loader),
                        epochs=30, anneal_strategy='cos', cycle_momentum=False)
